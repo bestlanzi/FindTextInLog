@@ -1,0 +1,83 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package findtextinlog;
+
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ *
+ * @author Lion
+ */
+public class StringUtil {
+    //定义要找到的关键字
+    public String text;
+    
+    //定义要找到的规则
+    public StringUtil(String aString){
+        text = aString;
+    }
+    
+    /**
+     * 
+     * @param sourceString 目标字符串
+     * @param text 需要找的字符串
+     * @return 如果在目标字符串能找到返回true，否则返回false
+     */
+    public static boolean findTextIgnoreCase(String sourceString, String text){
+        String ignoreCaseString = sourceString.toLowerCase();
+        String ignoreText = text.toLowerCase();
+        
+        CharSequence textSequence;
+        textSequence = ignoreText.subSequence(0,ignoreText.length());
+        
+        return ignoreCaseString.contains(textSequence);    
+    }
+    
+    /**
+     * 
+     * @param sourceString 原字符串
+     * @param text 需要找的字符串
+     * @return 忽略大小写了，如果字符串能找到则返回ture,否则返回false
+     */
+    public static boolean findTextNotIgnoreCase(String sourceString, String text){
+        CharSequence textSequence = text.subSequence(0, text.length());
+        return sourceString.contains(textSequence);
+    }
+    
+    /**
+     * 从一个string类型的文本中找到正则表达式体现的字符串
+     * @param sourceString
+     * @param myParttern
+     * @return 如果找到了就返回true, 否则返回false
+     */
+    public static boolean findPattern(String sourceString, String myParttern){
+        Pattern pattern = Pattern.compile(myParttern);
+        Matcher matcher;
+        matcher = pattern.matcher(sourceString);
+        return matcher.find();
+    }
+    
+    /***
+     * 返回正则表达式体现的字符串
+     * @param sourceString 原字符串
+     * @param myPattern 需要找的字符串
+     * @return 找到正则表达体现的字符串
+     */
+    public static String getPatternString(String sourceString , String myPattern){
+        Pattern pattern = Pattern.compile(myPattern);
+        Matcher matcher;
+        matcher = pattern.matcher(sourceString);
+        if(matcher.find()){
+            return matcher.group();
+        }
+        else
+            return null;
+    }
+    
+
+}
